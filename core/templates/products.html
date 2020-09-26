@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo app</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <a class="navbar-brand" href="#">Demo app</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Products <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+          
+        </div>
+      </nav>
+      
+      <main role="main" class="container">
+          <h2>Products</h2>
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price $</th>
+                        <th scope="col">Created at</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products%}
+                      <tr>
+                        <th scope="row">{{product.id}}</th>
+                        <td>{{product.name}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.price}}</td>
+                        
+                        <td>{{product.created_at|date:"SHORT_DATE_FORMAT"}} {{product.created_at|time:"h:i a"}}</td>
+                      </tr>
+                      {% endfor%}
+                    </tbody>
+                  </table>
+
+            </div>
+            <div class="col-md-4">
+                <form method="POST" action="/product-create">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="inputName">Name</label>
+                      <input name="name" type="text" class="form-control" id="inputName" aria-describedby="nameHelp">
+                      <small id="nameHelp" class="form-text text-muted">Product name.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPrice">Price</label>
+                        <input name="price" type="number" step="0.01" class="form-control" id="inputPrice" aria-describedby="priceHelp">
+                        <small id="priceHelp" class="form-text text-muted">Price of the product.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDescription">Description</label>
+                        <textarea name="description" rows="3"  class="form-control" id="inputDescription" maxlength="250" aria-describedby="descriptionHelp">
+                        </textarea>
+                        <small id="descriptionHelp" class="form-text text-muted">A simple description for the products</small>
+                    </div>                 
+                    <button type="submit" class="btn btn-primary">Create</button>
+                  </form>
+            </div>
+        </div>
+      </main>   
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+</body>
+</html>
